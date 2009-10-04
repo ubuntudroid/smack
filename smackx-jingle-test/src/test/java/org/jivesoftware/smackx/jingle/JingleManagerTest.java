@@ -722,7 +722,7 @@ public class JingleManagerTest extends SmackTestCase {
         XMPPConnection x0 = getConnection(0);
         XMPPConnection x1 = getConnection(1);
 
-        XMPPConnection.DEBUG_ENABLED = true;
+        //XMPPConnection.DEBUG_ENABLED = true;
 
         FixedResolver tr0 = new FixedResolver("127.0.0.1", 20080);
         FixedTransportManager ftm0 = new FixedTransportManager(tr0);
