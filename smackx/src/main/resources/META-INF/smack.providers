@@ -379,24 +379,6 @@
     </iqProvider>
 
     <iqProvider>
-        <elementName>site-user</elementName>
-        <namespace>http://jivesoftware.com/protocol/workgroup</namespace>
-        <className>org.jivesoftware.smackx.workgroup.site.SiteUser$Provider</className>
-    </iqProvider>
-
-    <iqProvider>
-        <elementName>site-invite</elementName>
-        <namespace>http://jivesoftware.com/protocol/workgroup</namespace>
-        <className>org.jivesoftware.smackx.workgroup.site.SiteInvitation$Provider</className>
-    </iqProvider>
-
-    <iqProvider>
-        <elementName>site-user-history</elementName>
-        <namespace>http://jivesoftware.com/protocol/workgroup</namespace>
-        <className>org.jivesoftware.smackx.workgroup.site.SiteUserHistory$Provider</className>
-    </iqProvider>
-
-    <iqProvider>
         <elementName>generic-metadata</elementName>
         <namespace>http://jivesoftware.com/protocol/workgroup</namespace>
         <className>org.jivesoftware.smackx.workgroup.settings.GenericSettings$InternalProvider</className>
