@@ -147,14 +147,14 @@ public class LoginTest extends SmackTestCase {
             XMPPConnection conn = createConnection();
             conn.connect();
             try {
-                conn.getAccountManager().createAccount("user_1", "user_1");
+                conn.getAccountManager().createAccount(getUsername(0), getUsername(0));
             } catch (XMPPException e) {
                 // Do nothing if the accout already exists
                 if (e.getXMPPError().getCode() != 409) {
                     throw e;
                 }
             }
-            conn.login("user_1", "user_1", (String) null);
+            conn.login(getUsername(0), getUsername(0), (String) null);
             if (conn.getSASLAuthentication().isAuthenticated()) {
                 // Check that the server assigned a resource
                 assertNotNull("JID assigned by server is missing", conn.getUser());
