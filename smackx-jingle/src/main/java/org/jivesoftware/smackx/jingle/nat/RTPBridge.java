@@ -28,7 +28,7 @@ import java.util.Iterator;
 
 import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.SmackConfiguration;
-import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.Connection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketIDFilter;
 import org.jivesoftware.smack.packet.IQ;
@@ -392,7 +392,7 @@ public class RTPBridge extends IQ {
      * @param sessionID
      * @return
      */
-    public static RTPBridge getRTPBridge(XMPPConnection xmppConnection, String sessionID) {
+    public static RTPBridge getRTPBridge(Connection xmppConnection, String sessionID) {
 
         if (!xmppConnection.isConnected()) {
             return null;
@@ -421,7 +421,7 @@ public class RTPBridge extends IQ {
      * @param xmppConnection
      * @return
      */
-    public static boolean serviceAvailable(XMPPConnection xmppConnection) {
+    public static boolean serviceAvailable(Connection xmppConnection) {
 
         if (!xmppConnection.isConnected()) {
             return false;
@@ -463,7 +463,7 @@ public class RTPBridge extends IQ {
      * @param xmppConnection
      * @return
      */
-    public static RTPBridge relaySession(XMPPConnection xmppConnection, String sessionID, String pass, TransportCandidate proxyCandidate, TransportCandidate localCandidate) {
+    public static RTPBridge relaySession(Connection xmppConnection, String sessionID, String pass, TransportCandidate proxyCandidate, TransportCandidate localCandidate) {
 
         if (!xmppConnection.isConnected()) {
             return null;
@@ -501,7 +501,7 @@ public class RTPBridge extends IQ {
      * @param xmppConnection
      * @return public IP String or null if not found
      */
-    public static String getPublicIP(XMPPConnection xmppConnection) {
+    public static String getPublicIP(Connection xmppConnection) {
 
         if (!xmppConnection.isConnected()) {
             return null;

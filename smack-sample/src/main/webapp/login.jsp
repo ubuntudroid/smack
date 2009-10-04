@@ -51,7 +51,7 @@
 <%@ include file="global.jsp" %>
 <%
     // If we already got a connection then proceed to view the roster
-    XMPPConnection conn = (XMPPConnection) session.getAttribute("connection");
+    Connection conn = (Connection) session.getAttribute("connection");
     if (conn != null && conn.isConnected()) {
         response.sendRedirect("viewRoster.jsp");
         return;
@@ -69,7 +69,7 @@
 
     // Try to connect to the server
     if (error == null && host != null && port != null) {
-        XMPPConnection.DEBUG_ENABLED = "Yes".equals(debug);
+        Connection.DEBUG_ENABLED = "Yes".equals(debug);
         try {
             if ("No".equals(ssl)) {
                 conn = new XMPPConnection(host);

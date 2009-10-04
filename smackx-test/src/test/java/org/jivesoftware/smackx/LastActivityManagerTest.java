@@ -20,7 +20,7 @@
 
 package org.jivesoftware.smackx;
 
-import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.Connection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.test.SmackTestCase;
@@ -33,8 +33,8 @@ public class LastActivityManagerTest extends SmackTestCase {
 	 * answered and correct.
 	 */
 	public void testOnline() {
-		XMPPConnection conn0 = getConnection(0);
-		XMPPConnection conn1 = getConnection(1);
+		Connection conn0 = getConnection(0);
+		Connection conn1 = getConnection(1);
 
 		// Send a message as the last activity action from connection 1 to
 		// connection 0
@@ -68,8 +68,8 @@ public class LastActivityManagerTest extends SmackTestCase {
 	 * This is a test to check if a denied LastActivity response is handled correctly.
 	 */
 	public void testOnlinePermisionDenied() {
-		XMPPConnection conn0 = getConnection(0);
-		XMPPConnection conn2 = getConnection(2);
+		Connection conn0 = getConnection(0);
+		Connection conn2 = getConnection(2);
 
 		// Send a message as the last activity action from connection 2 to
 		// connection 0
@@ -98,7 +98,7 @@ public class LastActivityManagerTest extends SmackTestCase {
 	 * lapsed time is answered and correct
 	 */
 	public void testLastLoggedOut() {
-		XMPPConnection conn0 = getConnection(0);
+		Connection conn0 = getConnection(0);
 
 		LastActivity lastActivity = null;
 		try {
@@ -118,7 +118,7 @@ public class LastActivityManagerTest extends SmackTestCase {
 	 * is answered and correct
 	 */
 	public void testServerUptime() {
-		XMPPConnection conn0 = getConnection(0);
+		Connection conn0 = getConnection(0);
 
 		LastActivity lastActivity = null;
 		try {

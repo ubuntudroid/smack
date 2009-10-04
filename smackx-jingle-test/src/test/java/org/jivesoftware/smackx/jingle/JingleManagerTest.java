@@ -52,8 +52,8 @@
 
 package org.jivesoftware.smackx.jingle;
 
+import org.jivesoftware.smack.Connection;
 import org.jivesoftware.smack.PacketListener;
-import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.packet.IQ;
@@ -719,10 +719,10 @@ public class JingleManagerTest extends SmackTestCase {
 
         resetCounter();
         
-        XMPPConnection x0 = getConnection(0);
-        XMPPConnection x1 = getConnection(1);
+        Connection x0 = getConnection(0);
+        Connection x1 = getConnection(1);
 
-        //XMPPConnection.DEBUG_ENABLED = true;
+        //Connection.DEBUG_ENABLED = true;
 
         FixedResolver tr0 = new FixedResolver("127.0.0.1", 20080);
         FixedTransportManager ftm0 = new FixedTransportManager(tr0);
@@ -834,8 +834,8 @@ public class JingleManagerTest extends SmackTestCase {
 
         resetCounter();
         
-        XMPPConnection x0 = getConnection(0);
-        XMPPConnection x1 = getConnection(1);
+        Connection x0 = getConnection(0);
+        Connection x1 = getConnection(1);
 
         FixedResolver tr0 = new FixedResolver("127.0.0.1", 20004);
         FixedTransportManager ftm0 = new FixedTransportManager(tr0);

@@ -20,7 +20,7 @@ package org.jivesoftware.smackx.jingle;
  * limitations under the License.
  */
 
-import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.Connection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.test.SmackTestCase;
 import org.jivesoftware.smackx.jingle.listeners.JingleSessionRequestListener;
@@ -55,8 +55,8 @@ public class JingleMediaTest extends SmackTestCase {
 
     public void testCompleteJmf() {
 
-        XMPPConnection x0 = getConnection(0);
-        XMPPConnection x1 = getConnection(1);
+        Connection x0 = getConnection(0);
+        Connection x1 = getConnection(1);
 
         for (int i = 0; i < 1; i++)
             try {
@@ -134,8 +134,8 @@ public class JingleMediaTest extends SmackTestCase {
 
         try {
 
-            XMPPConnection x0 = getConnection(0);
-            XMPPConnection x1 = getConnection(1);
+            Connection x0 = getConnection(0);
+            Connection x1 = getConnection(1);
 
             ICETransportManager icetm0 = new ICETransportManager(x0, "jivesoftware.com", 3478);
             ICETransportManager icetm1 = new ICETransportManager(x1, "jivesoftware.com", 3478);
@@ -215,10 +215,10 @@ public class JingleMediaTest extends SmackTestCase {
 
         try {
 
-            //XMPPConnection.DEBUG_ENABLED = true;
+            //Connection.DEBUG_ENABLED = true;
 
-            XMPPConnection x0 = getConnection(0);
-            XMPPConnection x1 = getConnection(1);
+            Connection x0 = getConnection(0);
+            Connection x1 = getConnection(1);
 
             JingleMediaManager jingleMediaManager0 = new SpeexMediaManager(new STUNTransportManager());
             JingleMediaManager jingleMediaManager1 = new SpeexMediaManager(new STUNTransportManager());
@@ -269,8 +269,8 @@ public class JingleMediaTest extends SmackTestCase {
 
         try {
 
-            XMPPConnection x0 = getConnection(0);
-            XMPPConnection x1 = getConnection(1);
+            Connection x0 = getConnection(0);
+            Connection x1 = getConnection(1);
 
              ICETransportManager icetm0 = new ICETransportManager(x0, "stun.xten.net", 3478);
             ICETransportManager icetm1 = new ICETransportManager(x1, "stun.xten.net", 3478);
@@ -328,8 +328,8 @@ public class JingleMediaTest extends SmackTestCase {
                 public void run() {
                     try {
 
-                        XMPPConnection x0 = getConnection(n);
-                        XMPPConnection x1 = getConnection(n + 1);
+                        Connection x0 = getConnection(n);
+                        Connection x1 = getConnection(n + 1);
    
                         BridgedTransportManager btm0 = new BridgedTransportManager(x0);
                         BridgedTransportManager btm1 = new BridgedTransportManager(x1);
@@ -402,10 +402,10 @@ public class JingleMediaTest extends SmackTestCase {
     public void testCompleteWithBridgeB() {
         try {
 
-            //XMPPConnection.DEBUG_ENABLED = true;
+            //Connection.DEBUG_ENABLED = true;
 
-            XMPPConnection x0 = getConnection(0);
-            XMPPConnection x1 = getConnection(1);
+            Connection x0 = getConnection(0);
+            Connection x1 = getConnection(1);
 
             BridgedTransportManager btm0 = new BridgedTransportManager(x0);
             BridgedTransportManager btm1 = new BridgedTransportManager(x1);
