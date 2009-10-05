@@ -56,6 +56,7 @@
 
 	<modules>
 		<module>smack</module>
+		<module>smack-bosh</module>
 		<module>smackx</module>
 		<module>smackx-debug</module>
 		<module>smackx-jingle</module>
