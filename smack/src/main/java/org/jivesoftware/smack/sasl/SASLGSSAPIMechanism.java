@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.HashMap;
 import javax.security.sasl.Sasl;
-import javax.security.sasl.SaslClient;
 import javax.security.auth.callback.CallbackHandler;
 
 /**

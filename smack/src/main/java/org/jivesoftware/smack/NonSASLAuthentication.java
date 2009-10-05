@@ -27,7 +27,6 @@ import org.jivesoftware.smack.packet.IQ;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.Callback;
-import java.io.IOException;
 
 /**
  * Implementation of JEP-0078: Non-SASL Authentication. Follow the following
