@@ -90,6 +90,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<show>public</show>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
