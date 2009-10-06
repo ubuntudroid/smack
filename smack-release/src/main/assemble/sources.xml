@@ -10,6 +10,7 @@
 			<outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
 			<includes>
 				<include>org.igniterealtime:smack</include>
+				<include>org.igniterealtime:smack-bosh</include>
 				<include>org.igniterealtime:smackx</include>
 				<include>org.igniterealtime:smackx-jingle</include>
 				<include>org.igniterealtime:smackx-debug</include>
@@ -31,6 +32,7 @@
 				<include>**/pom.xml</include>
 				<include>src/**/**</include>
 				<include>smack/src/**/**</include>
+				<include>smack-bosh/src/**/**</include>
 				<include>smack-sample/src/**/**</include>
 				<include>smack-test/src/**/**</include>
 				<include>smackx/src/**/**</include>

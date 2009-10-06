@@ -19,6 +19,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.igniterealtime</groupId>
+			<artifactId>smack-bosh</artifactId>
+			<classifier>jar-with-dependencies</classifier>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.igniterealtime</groupId>
 			<artifactId>smackx</artifactId>
 			<classifier>jar-with-dependencies</classifier>
 			<version>${project.version}</version>
