@@ -120,6 +120,25 @@ public class BOSHConnection extends Connection {
     /**
      * Create a HTTP Binding connection to a XMPP server.
      * 
+     * @param https true if you want to use SSL
+     *             (e.g. false for http://domain.lt:7070/http-bind).
+     * @param host the hostname or IP address of the connection manager
+     *             (e.g. domain.lt for http://domain.lt:7070/http-bind).
+     * @param port the port of the connection manager
+     *             (e.g. 7070 for http://domain.lt:7070/http-bind).
+     * @param filePath the file which is described by the URL
+     *             (e.g. /http-bind for http://domain.lt:7070/http-bind).
+     * @param xmppDomain the XMPP service name
+     *             (e.g. domain.lt for the user alice@domain.lt)
+     */
+    public BOSHConnection(boolean https, String host, int port, String filePath, String xmppDomain) {
+        super(new BOSHConfiguration(https, host, port, filePath, xmppDomain));
+        this.config = (BOSHConfiguration) getConfiguration();
+    }
+
+    /**
+     * Create a HTTP Binding connection to a XMPP server.
+     * 
      * @param config The configuration which is used for this connection.
      */
     public BOSHConnection(BOSHConfiguration config) {

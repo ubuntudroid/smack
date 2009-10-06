@@ -26,25 +26,73 @@ import java.net.URISyntaxException;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.proxy.ProxyInfo;
 
+/**
+ * Configuration to use while establishing the connection to the XMPP server via
+ * HTTP binding.
+ * 
+ * @see BOSHConnection
+ * @author Guenther Niess
+ */
 public class BOSHConfiguration extends ConnectionConfiguration {
 
-    public enum Protocol { http, https };
-
-    private Protocol protocol;
+    private boolean ssl;
     private String file;
 
     public BOSHConfiguration(String xmppDomain) {
         super(xmppDomain, 7070);
         setSASLAuthenticationEnabled(true);
-        protocol = Protocol.http;
+        ssl = false;
         file = "/http-bind/";
     }
 
     public BOSHConfiguration(String xmppDomain, int port) {
         super(xmppDomain, port);
         setSASLAuthenticationEnabled(true);
-        protocol = Protocol.http;
+        ssl = false;
         file = "/http-bind/";
+    }
+
+    /**
+     * Create a HTTP Binding configuration.
+     * 
+     * @param https true if you want to use SSL
+     *             (e.g. false for http://domain.lt:7070/http-bind).
+     * @param host the hostname or IP address of the connection manager
+     *             (e.g. domain.lt for http://domain.lt:7070/http-bind).
+     * @param port the port of the connection manager
+     *             (e.g. 7070 for http://domain.lt:7070/http-bind).
+     * @param filePath the file which is described by the URL
+     *             (e.g. /http-bind for http://domain.lt:7070/http-bind).
+     * @param xmppDomain the XMPP service name
+     *             (e.g. domain.lt for the user alice@domain.lt)
+     */
+    public BOSHConfiguration(boolean https, String host, int port, String filePath, String xmppDomain) {
+        super(host, port, xmppDomain);
+        setSASLAuthenticationEnabled(true);
+        ssl = https;
+        file = (filePath != null ? filePath : "/");
+    }
+
+    /**
+     * Create a HTTP Binding configuration.
+     * 
+     * @param https true if you want to use SSL
+     *             (e.g. false for http://domain.lt:7070/http-bind).
+     * @param host the hostname or IP address of the connection manager
+     *             (e.g. domain.lt for http://domain.lt:7070/http-bind).
+     * @param port the port of the connection manager
+     *             (e.g. 7070 for http://domain.lt:7070/http-bind).
+     * @param filePath the file which is described by the URL
+     *             (e.g. /http-bind for http://domain.lt:7070/http-bind).
+     * @param proxy the configuration of a proxy server.
+     * @param xmppDomain the XMPP service name
+     *             (e.g. domain.lt for the user alice@domain.lt)
+     */
+    public BOSHConfiguration(boolean https, String host, int port, String filePath, ProxyInfo proxy, String xmppDomain) {
+        super(host, port, xmppDomain, proxy);
+        setSASLAuthenticationEnabled(true);
+        ssl = https;
+        file = (filePath != null ? filePath : "/");
     }
 
     public boolean isProxyEnabled() {
@@ -63,10 +111,14 @@ public class BOSHConfiguration extends ConnectionConfiguration {
         return (proxy != null ? proxy.getProxyPort() : 8080);
     }
 
+    public boolean isUsingSSL() {
+        return ssl;
+    }
+
     public URI getURI() throws URISyntaxException {
         if (file.charAt(0) != '/') {
             file = '/' + file;
         }
-        return new URI(protocol + "://" + getHost() + ":" + getPort() + file);
+        return new URI((ssl ? "https://" : "http://") + getHost() + ":" + getPort() + file);
     }
 }
