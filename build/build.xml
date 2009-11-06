@@ -26,9 +26,9 @@
 
     <!-- Smack Version -->
     <property name="version.major" value="3" />
-    <property name="version.minor" value="1" />
+    <property name="version.minor" value="2" />
     <property name="version.revision" value="0" />
-    <property name="version.extra" value="" /> 
+    <property name="version.extra" value="SNAPSHOT" /> 
 
     <if>
         <equals arg1="${version.extra}" arg2=""/>
@@ -36,13 +36,13 @@
             <property name="version"
                       value="${version.major}.${version.minor}.${version.revision}"/>
             <property name="version.filename"
-                      value="${version.major}_${version.minor}_${version.revision}"/>
+                      value="${version}"/>
         </then>
         <else>
             <property name="version"
-                      value="${version.major}.${version.minor}.${version.revision}.${version.extra}"/>
+                      value="${version.major}.${version.minor}.${version.revision}-${version.extra}"/>
             <property name="version.filename"
-                      value="${version.major}_${version.minor}_${version.revision}_${version.extra}"/>
+                      value="${version}"/>
         </else>
     </if>
     <tstamp>
@@ -50,15 +50,49 @@
     </tstamp>
 
     <property file="${basedir}/build/build.properties" />
-    <property name="compile.dir" value="${basedir}/target/classes" />
-    <property name="compile.test.dir" value="${basedir}/target/classes-test" />
-    <property name="jar.dest.dir" value="${basedir}/target" />
-    <property name="javadoc.dest.dir" value="${basedir}/target/javadoc" />
-    <property name="merge.lib.dir" value="${basedir}/build/merge" />
-    <property name="test.dir" value="${basedir}/test" />
-    <property name="resources.dir" value="${basedir}/build/resources" />
-	<property name="jingle.extension.merge.lib.dir" value="${basedir}/jingle/extension/build/merge" />	
-	<property name="jingle.extension.lib.dir" value="${basedir}/jingle/extension/build/lib" />	
+    <property name="compile.dir" value="target/classes" />
+    <property name="compile.smack.dir" value="${basedir}/smack/${compile.dir}" />
+    <property name="compile.smack-bosh.dir" value="${basedir}/smack-bosh/${compile.dir}" />
+    <property name="compile.smackx.dir" value="${basedir}/smackx/${compile.dir}" />
+    <property name="compile.smackx-debug.dir" value="${basedir}/smackx-debug/${compile.dir}" />
+    <property name="compile.smackx-jingle.dir" value="${basedir}/smackx-jingle/${compile.dir}" />
+    <property name="compile.test.dir" value="target/classes-test" />
+    <property name="compile.test.smack.dir" value="${basedir}/smack-test/${compile.test.dir}" />
+    <property name="compile.test.smackx.dir" value="${basedir}/smackx-test/${compile.test.dir}" />
+    <property name="compile.test.smackx-jingle.dir" value="${basedir}/smackx-jingle-test/${compile.test.dir}" />
+    <property name="jar.dest.dir" value="target" />
+    <property name="jar.smack.dest.dir" value="${basedir}/smack/${jar.dest.dir}" />
+    <property name="jar.smack-bosh.dest.dir" value="${basedir}/smack-bosh/${jar.dest.dir}" />
+    <property name="jar.smackx.dest.dir" value="${basedir}/smackx/${jar.dest.dir}" />
+    <property name="jar.smackx-debug.dest.dir" value="${basedir}/smackx-debug/${jar.dest.dir}" />
+    <property name="jar.smackx-jingle.dest.dir" value="${basedir}/smackx-jingle/${jar.dest.dir}" />
+    <property name="jar.test.smack.dest.dir" value="${basedir}/smack-test/${jar.dest.dir}" />
+    <property name="jar.test.smackx.dest.dir" value="${basedir}/smackx-test/${jar.dest.dir}" />
+    <property name="jar.test.smackx-jingle.dest.dir" value="${basedir}/smackx-jingle-test/${jar.dest.dir}" />
+    <property name="javadoc.dest.dir" value="${basedir}/target/apidocs" />
+    <property name="release.dest.dir" value="${basedir}/smack-release/target" />
+    <property name="lib.build.dir" value="${basedir}/build/lib" />
+    <property name="lib.merge.dir" value="${basedir}/build/merge" />
+    <property name="src.dir" value="src/main/java" />
+    <property name="src.smack.dir" value="${basedir}/smack/${src.dir}" />
+    <property name="src.smack-bosh.dir" value="${basedir}/smack-bosh/${src.dir}" />
+    <property name="src.smackx.dir" value="${basedir}/smackx/${src.dir}" />
+    <property name="src.smackx-debug.dir" value="${basedir}/smackx-debug/${src.dir}" />
+    <property name="src.smackx-jingle.dir" value="${basedir}/smackx-jingle/${src.dir}" />
+    <property name="src.test.dir" value="src/test/java" />
+    <property name="src.test.smack.dir" value="${basedir}/smack-test/${src.test.dir}" />
+    <property name="src.test.smackx.dir" value="${basedir}/smackx-test/${src.test.dir}" />
+    <property name="src.test.smackx-jingle.dir" value="${basedir}/smackx-jingle-test/${src.test.dir}" />
+    <property name="resources.dir" value="src/main/resources" />
+    <property name="resources.smack.dir" value="${basedir}/smack/${resources.dir}" />
+    <property name="resources.smack-bosh.dir" value="${basedir}/smack-bosh/${resources.dir}" />
+    <property name="resources.smackx.dir" value="${basedir}/smackx/${resources.dir}" />
+    <property name="resources.smackx-debug.dir" value="${basedir}/smackx-debug/${resources.dir}" />
+    <property name="resources.smackx-jingle.dir" value="${basedir}/smackx-jingle/${resources.dir}" />
+    <property name="resources.test.dir" value="src/test/resources" />
+    <property name="resources.test.smack.dir" value="${basedir}/smack-test/${resources.test.dir}" />
+    <property name="resources.test.smackx.dir" value="${basedir}/smackx-test/${resources.test.dir}" />
+    <property name="resources.test.smackx-jingle.dir" value="${basedir}/smackx-jingle-test/${resources.test.dir}" />
 
     <!-- Test props - override these defaults in the properties file or in command line -->
     <property name="test.host" value="localhost" />
@@ -72,13 +106,73 @@
     <!-- ======================================================================================= -->
     <!-- ======================================================================================= -->
 
-    <patternset id="test.cases">
-        <include name="org/jivesoftware/smack/**/*Test.java" />
-        <exclude name="org/jivesoftware/smack/**/Messenger*Test.java" />
-    </patternset>
+    <path id="compile.smack.dependencies">
+        <fileset dir="${lib.merge.dir}/smack" includes="*.jar"/>
+    </path>
 
-    <patternset id="messenger.test.cases">
-        <include name="org/jivesoftware/smack/**/Messenger*Test.java" />
+    <path id="compile.smack-bosh.dependencies">
+        <path refid="compile.smack.dependencies"/>
+        <pathelement path="${compile.smack.dir}"/>
+        <fileset dir="${lib.merge.dir}/smack-bosh" includes="*.jar"/>
+    </path>
+
+    <path id="compile.smackx.dependencies">
+        <path refid="compile.smack.dependencies"/>
+        <pathelement path="${compile.smack.dir}"/>
+    </path>
+
+    <path id="compile.smackx-debug.dependencies">
+        <path refid="compile.smackx.dependencies"/>
+        <pathelement path="${compile.smackx.dir}"/>
+    </path>
+
+    <path id="compile.smackx-jingle.dependencies">
+        <path refid="compile.smackx.dependencies"/>
+        <pathelement path="${compile.smackx.dir}"/>
+        <fileset dir="${lib.build.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${lib.merge.dir}/smackx-jingle">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="compile.test.smack.dependencies">
+        <path refid="compile.smack.dependencies"/>
+        <pathelement path="${compile.smack.dir}"/>
+        <fileset dir="${lib.build.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="compile.test.smackx.dependencies">
+        <path refid="compile.smackx.dependencies"/>
+        <pathelement path="${compile.smackx.dir}"/>
+        <pathelement path="${compile.test.smack.dir}"/>
+        <fileset dir="${lib.build.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="compile.test.smackx-jingle.dependencies">
+        <path refid="compile.smackx-jingle.dependencies"/>
+        <pathelement path="${compile.smackx-jingle.dir}"/>
+        <pathelement path="${compile.test.smack.dir}"/>
+        <fileset dir="${lib.build.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="javadoc.sources">
+        <pathelement path="${src.smack.dir}"/>
+        <pathelement path="${src.smack-bosh.dir}"/>
+        <pathelement path="${src.smackx.dir}"/>
+        <pathelement path="${src.smackx-debug.dir}"/>
+        <pathelement path="${src.smackx-jingle.dir}"/>
+    </path>
+
+    <patternset id="test.cases">
+        <include name="**/*Test.java" />
     </patternset>
 
     <!-- TARGETS -->
@@ -89,134 +183,402 @@
     <target name="all" depends="jar" description="Calls 'jar' target by default">
     </target>
 
-    <!-- compile -->
-    <!-- ======================================================================================= -->
-    <target name="compile" description="Compiles all source to ${compile.dir}.">
-        <!-- make target dir -->
-        <mkdir dir="${compile.dir}" />
-        <javac
-            destdir="${compile.dir}"
-            includeAntRuntime="no"
-            debug="on"
-            source="1.5"
-            target="1.5"
-        >
-            <src path="${basedir}/source" />
-            <classpath>
-                <fileset dir="${merge.lib.dir}">
-                    <include name="*.jar"/>
-                </fileset>
-            </classpath>
-        </javac>		
-		<mkdir dir="${compile.dir}/jingle/extension" />
-		<javac
-            destdir="${compile.dir}/jingle/extension"
-            includeAntRuntime="no"
-            debug="on"
-            source="1.5"
-            target="1.5"
-        >
-            <src path="${basedir}/jingle/extension/source" />
-            <classpath>
-				<fileset dir="${merge.lib.dir}">
-                    <include name="*.jar"/>
-                </fileset>
-                <fileset dir="${jingle.extension.lib.dir}">
-                    <include name="*.jar"/>
-                </fileset>
-				<fileset dir="${jingle.extension.merge.lib.dir}">
-                    <include name="*.jar"/>
-                </fileset>
-				<pathelement path="${compile.dir}"/>
-            </classpath>
-        </javac>		
+
+    <!-- init -->
+    <target name="init" description="Prepare build environment">
     </target>
 
-    <!-- compile-test -->
+    <!-- compile -->
     <!-- ======================================================================================= -->
-    <target name="compile-test" description="Compiles all source to ${compile.dir}.">
-        <!-- make target dir -->
-        <mkdir dir="${compile.test.dir}" />
+    <target name="compile-smack" depends="init" description="Compiles smack core.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.smack.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.smack.dir}" type="dir" property="resources.smack.dir.found"/>
+        <if>
+            <equals arg1="${resources.smack.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.smack.dir}">
+                    <fileset dir="${resources.smack.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
         <javac
-            destdir="${compile.test.dir}"
-            includeAntRuntime="no"
-            debug="on"
-            source="1.5"
-            target="1.5"
-        >
-            <src path="${test.dir}" />
+                destdir="${compile.smack.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.smack.dir}" />
             <classpath>
-                <fileset dir="${merge.lib.dir}">
-                    <include name="*.jar"/>
-                </fileset>
-                <fileset dir="${basedir}/build">
-                    <include name="junit.jar"/>
-                    <include name="xmlunit.jar"/>
-                </fileset>
-                <pathelement location="${compile.dir}" />
+                <path refid="compile.smack.dependencies"/>
             </classpath>
         </javac>
     </target>
 
-    <!-- jar -->
+    <target name="compile-smack-bosh" depends="compile-smack" description="Compiles smack bosh extension.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.smack-bosh.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.smack-bosh.dir}" type="dir" property="resources.smack-bosh.dir.found"/>
+        <if>
+            <equals arg1="${resources.smack-bosh.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.smack-bosh.dir}">
+                    <fileset dir="${resources.smack-bosh.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
+        <javac
+                destdir="${compile.smack-bosh.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.smack-bosh.dir}" />
+            <classpath>
+                <path refid="compile.smack-bosh.dependencies"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile-smackx" depends="compile-smack" description="Compiles smack extensions.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.smackx.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.smackx.dir}" type="dir" property="resources.smackx.dir.found"/>
+        <if>
+            <equals arg1="${resources.smackx.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.smackx.dir}">
+                    <fileset dir="${resources.smackx.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
+        <javac
+                destdir="${compile.smackx.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.smackx.dir}" />
+            <classpath>
+                <path refid="compile.smackx.dependencies"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile-smackx-debug" depends="compile-smackx" description="Compiles smack enhanced debug console.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.smackx-debug.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.smackx-debug.dir}" type="dir" property="resources.smackx-debug.dir.found"/>
+        <if>
+            <equals arg1="${resources.smackx-debug.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.smackx-debug.dir}">
+                    <fileset dir="${resources.smackx-debug.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
+        <javac
+                destdir="${compile.smackx-debug.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.smackx-debug.dir}" />
+            <classpath>
+                <path refid="compile.smackx-debug.dependencies"/>
+            </classpath>
+        </javac>
+        <mkdir dir="${compile.smackx-debug.dir}" />
+    </target>
+
+    <target name="compile-smackx-jingle" depends="compile-smackx" description="Compiles smack jingle extensions.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.smackx-jingle.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.smackx-jingle.dir}" type="dir" property="resources.smackx-jingle.dir.found"/>
+        <if>
+            <equals arg1="${resources.smackx-jingle.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.smackx-jingle.dir}">
+                    <fileset dir="${resources.smackx-jingle.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
+        <javac
+                destdir="${compile.smackx-jingle.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.smackx-jingle.dir}" />
+            <classpath>
+                <path refid="compile.smackx-jingle.dependencies"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target
+            name="compile"
+            depends="compile-smack, compile-smack-bosh, compile-smackx-debug, compile-smackx-jingle"
+            description="Compiles all source.">
+        <echo>Compiliation finished!</echo>
+    </target>
+
+    <!-- compile-test -->
     <!-- ======================================================================================= -->
-    <target name="jar" depends="compile" unless="jar.uptodate" description="Produces smack.jar">
-        <copy todir="${compile.dir}/META-INF" file="${basedir}/build/resources/META-INF/smack-config.xml" />
-        <jar destfile="${jar.dest.dir}/smack.jar"
-            basedir="${compile.dir}"
-            includes="org/jivesoftware/smack/**/*.class, **/smack-config.xml"
-         >
-             <zipfileset src="${merge.lib.dir}/xpp.jar"/>
-        </jar>
-        <copy todir="${compile.dir}/META-INF" file="${basedir}/build/resources/META-INF/smack.providers" />
-        <jar destfile="${jar.dest.dir}/smackx.jar"
-            basedir="${compile.dir}"
-            includes="org/jivesoftware/smackx/**/*.class, **/*.providers"
-            excludes="org/jivesoftware/smackx/debugger/*.class"
-        >
-            <manifest>
-                <attribute name="Class-Path" value="smack.jar" />
-            </manifest>
-            <zipfileset src="${merge.lib.dir}/jzlib.jar"/>
-        </jar>
-        <copy todir="${compile.dir}/images">
-            <fileset dir="${basedir}/build/resources/images">
-                <include name="*.png"/>
-            </fileset>
-        </copy>
-        <jar destfile="${jar.dest.dir}/smackx-debug.jar"
-            basedir="${compile.dir}"
-            includes="org/jivesoftware/smackx/debugger/*.class, **/*.png"
-        >
-            <manifest>
-                <attribute name="Class-Path" value="smack.jar" />
-            </manifest>
-        </jar>
-		<jar destfile="${jar.dest.dir}/smackx-jingle.jar"
-            basedir="${compile.dir}/jingle/extension"
-            includes="org/jivesoftware/smackx/**/*.class"
-        >
-            <manifest>
-                <attribute name="Class-Path" value="smack.jar, smackx.jar" />
-            </manifest>
-            <zipfileset src="${jingle.extension.merge.lib.dir}/jstun.jar"/>
-        </jar>
-        <delete file="${compile.dir}/META-INF/smack-config.xml" />
-        <delete file="${compile.dir}/META-INF/smack.providers" />
-        <delete>
-            <fileset dir="${compile.dir}/images">
-                <include name="*.png"/>
-            </fileset>
-        </delete>
+    <target name="compile-smack-test" depends="compile-smack" description="Compiles smack core tests.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.test.smack.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.test.smack.dir}" type="dir" property="resources.test.smack.dir.found"/>
+        <if>
+            <equals arg1="${resources.test.smack.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.test.smack.dir}">
+                    <fileset dir="${resources.test.smack.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
+        <javac
+                destdir="${compile.test.smack.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.test.smack.dir}" />
+            <classpath>
+                <path refid="compile.test.smack.dependencies"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile-smackx-test" depends="compile-smackx, compile-smack-test" description="Compiles smack extension tests.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.test.smackx.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.test.smackx.dir}" type="dir" property="resources.test.smackx.dir.found"/>
+        <if>
+            <equals arg1="${resources.test.smackx.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.test.smackx.dir}">
+                    <fileset dir="${resources.test.smackx.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
+        <javac
+                destdir="${compile.test.smackx.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.test.smackx.dir}" />
+            <classpath>
+                <path refid="compile.test.smackx.dependencies"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile-smackx-jingle-test" depends="compile-smackx-jingle, compile-smack-test" description="Compiles smack jingle extension tests.">
+        <!-- prepare output directory -->
+        <mkdir dir="${compile.test.smackx-jingle.dir}" />
+
+        <!-- prepare java resources -->
+        <available file="${resources.test.smackx-jingle.dir}" type="dir" property="resources.test.smackx-jingle.dir.found"/>
+        <if>
+            <equals arg1="${resources.test.smackx-jingle.dir.found}" arg2="true"/>
+            <then>
+                <copy todir="${compile.test.smackx-jingle.dir}">
+                    <fileset dir="${resources.test.smackx-jingle.dir}" includes="**/*.*"/>
+                </copy>
+            </then>
+        </if>
+
+        <!-- compile java sources -->
+        <javac
+                destdir="${compile.test.smackx-jingle.dir}"
+                includeAntRuntime="no"
+                debug="on"
+                source="1.5"
+                target="1.5" >
+            <src path="${src.test.smackx-jingle.dir}" />
+            <classpath>
+                <path refid="compile.test.smackx-jingle.dependencies"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target
+            name="compile-test"
+            depends="compile-smack-test, compile-smackx-test, compile-smackx-jingle-test"
+            description="Compiles all test source.">
+        <echo>Compiliation of tests finished!</echo>
     </target>
 
     <!-- jar -->
     <!-- ======================================================================================= -->
-    <target name="jar-test" depends="compile-test" description="Produces jar of test code">
-        <jar destfile="${jar.dest.dir}/smack-test.jar"
-            basedir="${compile.test.dir}"
-            includes="org/jivesoftware/smack/**/*.class"
-        />
+    <target name="jar-smack" depends="compile-smack" description="Produces smack.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.smack.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.smack.dest.dir}/smack-${version.filename}.jar"
+                basedir="${compile.smack.dir}"
+                includes="**/*.*" />
+
+        <!-- create jar with dependencies -->
+        <jar destfile="${jar.smack.dest.dir}/smack-${version.filename}-jar-with-dependencies.jar"
+                basedir="${compile.smack.dir}"
+                includes="**/*.*">
+            <zipgroupfileset dir="${lib.merge.dir}/smack" includes="*.jar"/>
+        </jar>
+    </target>
+
+    <target name="jar-smack-bosh" depends="compile-smack-bosh" description="Produces smack-bosh.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.smack-bosh.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.smack-bosh.dest.dir}/smack-bosh-${version.filename}.jar"
+                basedir="${compile.smack-bosh.dir}"
+                includes="**/*.*" />
+
+        <!-- create jar with dependencies -->
+        <jar destfile="${jar.smack-bosh.dest.dir}/smack-bosh-${version.filename}-jar-with-dependencies.jar"
+                basedir="${compile.smack-bosh.dir}"
+                includes="**/*.*">
+            <zipgroupfileset dir="${lib.merge.dir}/smack-bosh" includes="*.jar"/>
+        </jar>
+    </target>
+
+    <target name="jar-smackx" depends="compile-smackx" description="Produces smackx.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.smackx.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.smackx.dest.dir}/smackx-${version.filename}.jar"
+                basedir="${compile.smackx.dir}"
+                includes="**/*.*" />
+
+        <!-- create jar with dependencies -->
+        <jar destfile="${jar.smackx.dest.dir}/smackx-${version.filename}-jar-with-dependencies.jar"
+                basedir="${compile.smackx.dir}"
+                includes="**/*.*">
+            <!-- <zipgroupfileset dir="${lib.merge.dir}/smackx" includes="*.jar"/> -->
+        </jar>
+    </target>
+
+    <target name="jar-smackx-debug" depends="compile-smackx-debug" description="Produces smackx-debug.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.smackx-debug.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.smackx-debug.dest.dir}/smackx-debug-${version.filename}.jar"
+                basedir="${compile.smackx-debug.dir}"
+                includes="**/*.*" />
+
+        <!-- create jar with dependencies -->
+        <jar destfile="${jar.smackx-debug.dest.dir}/smackx-debug-${version.filename}-jar-with-dependencies.jar"
+                basedir="${compile.smackx-debug.dir}"
+                includes="**/*.*">
+            <!-- <zipgroupfileset dir="${lib.merge.dir}/smackx-debug" includes="*.jar"/> -->
+        </jar>
+    </target>
+
+    <target name="jar-smackx-jingle" depends="compile-smackx-jingle" description="Produces smackx-jingle.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.smackx-jingle.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.smackx-jingle.dest.dir}/smackx-jingle-${version.filename}.jar"
+                basedir="${compile.smackx-jingle.dir}"
+                includes="**/*.*" />
+
+        <!-- create jar with dependencies -->
+        <jar destfile="${jar.smackx-jingle.dest.dir}/smackx-jingle-${version.filename}-jar-with-dependencies.jar"
+                basedir="${compile.smackx-jingle.dir}"
+                includes="**/*.*">
+            <zipgroupfileset dir="${lib.merge.dir}/smackx-jingle" includes="*.jar"/>
+        </jar>
+    </target>
+
+    <target
+            name="jar"
+            depends="compile, jar-smack, jar-smack-bosh, jar-smackx, jar-smackx-debug, jar-smackx-jingle"
+            description="Produces all packages.">
+        <echo>Package finished!</echo>
+    </target>
+
+    <!-- jar-test -->
+    <!-- ======================================================================================= -->
+    <target
+            name="jar-test-smack"
+            depends="compile-smack-test, test-smack"
+            description="Produces smack-test.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.test.smack.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.test.smack.dest.dir}/smack-test-${version.filename}.jar"
+                basedir="${compile.test.smack.dir}"
+                includes="**/*.*" />
+    </target>
+
+    <target
+            name="jar-test-smackx"
+            depends="compile-smackx-test, test-smackx"
+            description="Produces smackx-test.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.test.smackx.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.test.smackx.dest.dir}/smackx-test-${version.filename}.jar"
+                basedir="${compile.test.smackx.dir}"
+                includes="**/*.*" />
+    </target>
+
+    <target
+            name="jar-test-smackx-jingle"
+            depends="compile-smackx-jingle-test, test-smackx-jingle"
+            description="Produces smackx-jingle-test.jar">
+        <!-- prepare output directory -->
+        <mkdir dir="${jar.test.smackx-jingle.dest.dir}" />
+
+        <!-- create jar without dependencies -->
+        <jar destfile="${jar.test.smackx-jingle.dest.dir}/smackx-jingle-test-${version.filename}.jar"
+                basedir="${compile.test.smackx-jingle.dir}"
+                includes="**/*.*" />
+    </target>
+
+    <target
+            name="jar-test"
+            depends="jar-test-smack, jar-test-smackx, jar-test-smackx-jingle"
+            description="Produces jar of test code">
+        <echo>Test package finished!</echo>
     </target>
 
     <!-- javadoc -->
@@ -227,21 +589,23 @@
         <javadoc
             packagenames="org.jivesoftware.smack.*, org.jivesoftware.smackx.*"
             excludepackagenames="org.jivesoftware.smack.util.collections"
-            sourcepath="${basedir}/source"
+            sourcepathref="javadoc.sources"
             destdir="${javadoc.dest.dir}"
             author="true"
             windowtitle="Smack ${version} Documentation"
-            overview="${basedir}/source/overview.html"
+            overview="${basedir}/src/main/javadoc/overview.html"
         >
             <classpath>
-                <fileset dir="${merge.lib.dir}">
-                    <include name="*.jar"/>
-                </fileset>
+                <path refid="compile.smack.dependencies"/>
+                <path refid="compile.smack-bosh.dependencies"/>
+                <path refid="compile.smackx.dependencies"/>
+                <path refid="compile.smackx-debug.dependencies"/>
+                <path refid="compile.smackx-jingle.dependencies"/>
             </classpath>
             <doctitle><![CDATA[<font face="arial,helvetica">Smack ${version}</font>]]></doctitle>
             <header><![CDATA[<b>Smack</b>]]></header>
             <bottom><![CDATA[<i>Copyright &copy; 2003-2007 Jive Software. </i>]]></bottom>
-            <link href="http://java.sun.com/j2se/1.3/docs/api/" />
+            <link href="http://java.sun.com/j2se/1.5/docs/api/" />
             <link href="http://java.sun.com/j2ee/sdk_1.2.1/techdocs/api/" />
         </javadoc>
     </target>
@@ -257,25 +621,7 @@
 
     <!-- test -->
     <!-- ======================================================================================= -->
-    <target name="test" depends="compile, jar-test" unless="no.test">
-
-        <echo>
-
-
-            **** no.test: ${no.test}
-
-
-        </echo>
-
-        <property name="test.messenger" value="false" />
-
-        <if>
-            <not><equals arg1="test.messenger" arg2="true" /></not>
-            <then>
-                <property name="test.classes" value="test.cases" />
-            </then>
-        </if>
-
+    <target name="test-smack" depends="compile-smack-test" unless="no.test">
         <junit printsummary="on"
             fork="true"
             haltonfailure="false"
@@ -290,25 +636,16 @@
             <sysproperty key="smack.debug" value="${test.smack.debug}" />
 
             <classpath>
-                <fileset dir="${basedir}/build">
-                    <include name="xmlunit.jar"/>
-                </fileset>
-                <fileset dir="${merge.lib.dir}">
-                    <include name="*.jar"/>
-                </fileset>
-                <fileset dir="${basedir}">
-                    <include name="smack-test.jar"/>
-                </fileset>
-                <pathelement location="${compile.dir}" />
-                <pathelement location="${test.dir}" />
-                <pathelement location="${resources.dir}" />
+                <path refid="compile.test.smack.dependencies"/>
+                <pathelement path="${compile.test.smack.dir}"/>
+                <pathelement path="${compile.smackx.dir}"/>
             </classpath>
 
             <formatter type="brief" usefile="false"/>
 
             <batchtest>
-                <fileset dir="${basedir}/test">
-                    <patternset refid="${test.classes}" />
+                <fileset dir="${src.test.smack.dir}">
+                    <patternset refid="test.cases" />
                 </fileset>
             </batchtest>
         </junit>
@@ -316,15 +653,69 @@
         <fail if="tests.failed" message="** Tests failed, see test log. **" />
     </target>
 
+    <target name="test-smackx" depends="compile-smack-test" unless="no.test">
+        <junit printsummary="on"
+            fork="true"
+            haltonfailure="false"
+            failureproperty="tests.failed"
+            showoutput="true">
 
-    <!-- test -->
-    <!-- ======================================================================================= -->
-    <target name="test.messenger" depends="compile, jar-test" unless="no.test">
-        <antcall target="test" inheritall="true" inheritrefs="true">
-            <param name="test.messenger" value="true" />
-            <param name="test.classes" value="messenger.test.cases" />
-        </antcall>
+            <sysproperty key="smack.test.host" value="${test.host}" />
+            <sysproperty key="smack.test.port" value="${test.port}" />
+            <sysproperty key="smack.test.admin.username" value="${test.admin.username}" />
+            <sysproperty key="smack.test.admin.password" value="${test.admin.password}" />
+            <sysproperty key="smack.test.admin.resource" value="${test.admin.resource}" />
+            <sysproperty key="smack.debug" value="${test.smack.debug}" />
+
+            <classpath>
+                <path refid="compile.test.smackx.dependencies"/>
+                <pathelement path="${compile.test.smackx.dir}"/>
+            </classpath>
+
+            <formatter type="brief" usefile="false"/>
+
+            <batchtest>
+                <fileset dir="${src.test.smackx.dir}">
+                    <patternset refid="test.cases" />
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <fail if="tests.failed" message="** Tests failed, see test log. **" />
     </target>
+
+    <target name="test-smackx-jingle" depends="compile-smack-test" unless="no.test">
+        <junit printsummary="on"
+            fork="true"
+            haltonfailure="false"
+            failureproperty="tests.failed"
+            showoutput="true">
+
+            <sysproperty key="smack.test.host" value="${test.host}" />
+            <sysproperty key="smack.test.port" value="${test.port}" />
+            <sysproperty key="smack.test.admin.username" value="${test.admin.username}" />
+            <sysproperty key="smack.test.admin.password" value="${test.admin.password}" />
+            <sysproperty key="smack.test.admin.resource" value="${test.admin.resource}" />
+            <sysproperty key="smack.debug" value="${test.smack.debug}" />
+
+            <classpath>
+                <path refid="compile.test.smackx-jingle.dependencies"/>
+                <pathelement path="${compile.test.smackx-jingle.dir}"/>
+            </classpath>
+
+            <formatter type="brief" usefile="false"/>
+
+            <batchtest>
+                <fileset dir="${src.test.smackx-jingle.dir}">
+                    <patternset refid="test.cases" />
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <fail if="tests.failed" message="** Tests failed, see test log. **" />
+    </target>
+
+    <target name="test" depends="compile-test, test-smack, test-smackx, test-smackx-jingle" unless="no.test" />
 
 
     <!-- release -->
@@ -339,26 +730,39 @@
         <ant antfile="${basedir}/build/release.xml" />
     </target>
 
-	<!-- checkcode -->
-	<!-- ======================================================================================= -->
-	<target name="checkcode" >
-		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
-        	<classpath>
-				<pathelement location="${basedir}/build/pmd.jar" />
-				<pathelement location="${basedir}/build/asm.jar" />
-            	<pathelement location="${basedir}/build/jaxen.jar" />
-        	</classpath>
-		</taskdef>
-		<pmd shortFilenames="true">
-			<ruleset>migrating</ruleset>
-			<ruleset>finalizers</ruleset>
-			<formatter type="html" toFile="target/pmd_report.html" toConsole="true" />
-			<fileset dir="source/">
-				<include name="**/*.java" />
-			</fileset>
-		</pmd>		
-	</target>
-	
+    <!-- checkcode -->
+    <!-- ======================================================================================= -->
+    <target name="checkcode" >
+        <mkdir dir="${basedir}/target"/>
+        <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
+            <classpath>
+                <pathelement location="${basedir}/build/pmd.jar" />
+                <pathelement location="${basedir}/build/asm.jar" />
+                <pathelement location="${basedir}/build/jaxen.jar" />
+            </classpath>
+        </taskdef>
+        <pmd shortFilenames="true">
+            <ruleset>migrating</ruleset>
+            <ruleset>finalizers</ruleset>
+            <formatter type="html" toFile="${basedir}/target/pmd_report.html" toConsole="true" />
+            <fileset dir="${src.smack.dir}">
+                <include name="**/*.java" />
+            </fileset>
+            <fileset dir="${src.smack-bosh.dir}">
+                <include name="**/*.java" />
+            </fileset>
+            <fileset dir="${src.smackx.dir}">
+                <include name="**/*.java" />
+            </fileset>
+            <fileset dir="${src.smackx-debug.dir}">
+                <include name="**/*.java" />
+            </fileset>
+            <fileset dir="${src.smackx-jingle.dir}">
+                <include name="**/*.java" />
+            </fileset>
+        </pmd>
+    </target>
+
     <!-- release-exists -->
     <!-- ======================================================================================= -->
     <target name="release-exists" >
@@ -369,15 +773,25 @@
     <!-- clean -->
     <!-- ======================================================================================= -->
     <target name="clean" description="Deletes all generated content.">
-    	<delete dir="${javadoc.dest.dir}" />
-        <delete dir="${compile.dir}" />
-        <delete dir="${compile.test.dir}" />
-        <delete file="${basedir}/smack.jar" />
-        <delete file="${basedir}/smackx.jar" />
-        <delete file="${basedir}/smackx-debug.jar" />
-        <delete file="${basedir}/smack-test.jar" />
-		<delete file="${basedir}/smackx-jingle.jar" />
+        <delete dir="${javadoc.dest.dir}" />
+        <delete dir="${compile.smack.dir}" />
+        <delete dir="${compile.smack-bosh.dir}" />
+        <delete dir="${compile.smackx.dir}" />
+        <delete dir="${compile.smackx-debug.dir}" />
+        <delete dir="${compile.smackx-jingle.dir}" />
+        <delete dir="${compile.test.smack.dir}" />
+        <delete dir="${compile.test.smackx.dir}" />
+        <delete dir="${compile.test.smackx-jingle.dir}" />
         <delete dir="${basedir}/target" />
+        <delete dir="${basedir}/smack/target" />
+        <delete dir="${basedir}/smack-bosh/target" />
+        <delete dir="${basedir}/smack-release/target" />
+        <delete dir="${basedir}/smack-test/target" />
+        <delete dir="${basedir}/smackx/target" />
+        <delete dir="${basedir}/smackx-debug/target" />
+        <delete dir="${basedir}/smackx-test/target" />
+        <delete dir="${basedir}/smackx-jingle/target" />
+        <delete dir="${basedir}/smackx-jingle-test/target" />
     </target>
 
 </project>

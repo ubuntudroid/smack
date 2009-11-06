@@ -47,6 +47,17 @@
 			<outputDirectory>documentation</outputDirectory>
 		</fileSet>
 		<fileSet>
+			<directory>../build</directory>
+			<outputDirectory>build</outputDirectory>
+			<includes>
+				<include>ant*</include>
+				<include>pmd.jar</include>
+				<include>build.xml</include>
+				<include>lib/*.jar</include>
+				<include>merge/**/*.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
 			<directory>target/classes</directory>
 			<outputDirectory>/</outputDirectory>
 		</fileSet>
