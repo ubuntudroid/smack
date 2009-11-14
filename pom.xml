@@ -61,10 +61,12 @@
 		<module>smackx-debug</module>
 		<module>smackx-jingle</module>
 		<module>smack-sample</module>
+		<!--
 		<module>smack-test</module>
 		<module>smackx-test</module>
 		<module>smackx-jingle-test</module>
 		<module>smack-release</module>
+		-->
 	</modules>
 
 
