@@ -26,7 +26,6 @@ import org.jivesoftware.smack.sasl.SASLMechanism.Challenge;
 import org.jivesoftware.smack.sasl.SASLMechanism.Failure;
 import org.jivesoftware.smack.sasl.SASLMechanism.Success;
 import org.jivesoftware.smack.util.PacketParserUtils;
-import org.xmlpull.mxp1.MXParser;
 import org.xmlpull.v1.XmlPullParser;
 
 import com.kenai.jbosh.AbstractBody;
@@ -70,7 +69,7 @@ public class BOSHPacketReader implements BOSHClientResponseListener {
                 if (connection.authID == null) {
                     connection.authID = body.getAttribute(BodyQName.create(BOSHConnection.BOSH_URI, "authid"));
                 }
-                final XmlPullParser parser = new MXParser();
+                final XmlPullParser parser = SmackConfiguration.getParser();
                 parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES,
                         true);
                 parser.setInput(new StringReader(body.toXML()));
