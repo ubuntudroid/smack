@@ -20,10 +20,10 @@
 
 package org.jivesoftware.smack;
 
-import org.xmlpull.mxp1.MXParser;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.*;
 
@@ -44,7 +44,7 @@ import java.util.*;
  */
 public final class SmackConfiguration {
 
-    private static final String SMACK_VERSION = "3.1.0";
+    private static final String SMACK_VERSION = "3.2.0";
 
     private static int packetReplyTimeout = 5000;
     private static int keepAliveInterval = 30000;
@@ -71,7 +71,7 @@ public final class SmackConfiguration {
                     InputStream systemStream = null;
                     try {
                         systemStream = url.openStream();
-                        XmlPullParser parser = new MXParser();
+                        XmlPullParser parser = getParser();
                         parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true);
                         parser.setInput(systemStream, "UTF-8");
                         int eventType = parser.getEventType();
@@ -228,6 +228,54 @@ public final class SmackConfiguration {
      */
     public static List<String> getSaslMechs() {
         return defaultMechs;
+    }
+
+    /**
+     * Create and initialize a {@link XmlPullParser}.
+     * You can specify a customized implementation by setup the system property
+     * <code>smack.parserClass</code> to the implementation.
+     *
+     * @throws IllegalArgumentException if the XmlPullParser can't be loaded.
+     */
+    public static XmlPullParser getParser() {
+        // Detect the parser class to use.
+        String className = null;
+        XmlPullParser parser = null;
+        // Use try block since we may not have permission to get a system
+        // property (for example, when an applet).
+        try {
+            className = System.getProperty("smack.parserClass");
+        }
+        catch (Throwable t) {
+            // Ignore.
+        }
+        Class<?> parserClass = null;
+        if (className != null) {
+            try {
+                parserClass = Class.forName(className);
+            }
+            catch (Exception e) {
+                throw new IllegalArgumentException("The smack.parserClass can't be loaded", e);
+            }
+        }
+        if (parserClass == null) {
+            try {
+                parserClass =
+                        Class.forName("org.xmlpull.mxp1.MXParser");
+            }
+            catch (Exception e) {
+                throw new IllegalStateException("No XML Pull Parser is available!", e);
+            }
+        }
+        // Create a new parser instance.
+        try {
+            Constructor<?> constructor = parserClass.getConstructor();
+            parser = (XmlPullParser) constructor.newInstance();
+        }
+        catch (Exception e) {
+            throw new IllegalArgumentException("Can't initialize the configured debugger!", e);
+        }
+        return parser;
     }
 
     private static void parseClassToLoad(XmlPullParser parser) throws Exception {
