@@ -21,9 +21,9 @@
 package org.jivesoftware.smack;
 
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.util.*;
 
@@ -249,31 +249,14 @@ public final class SmackConfiguration {
         catch (Throwable t) {
             // Ignore.
         }
-        Class<?> parserClass = null;
-        if (className != null) {
-            try {
-                parserClass = Class.forName(className);
-            }
-            catch (Exception e) {
-                throw new IllegalArgumentException("The smack.parserClass can't be loaded", e);
-            }
-        }
-        if (parserClass == null) {
-            try {
-                parserClass =
-                        Class.forName("org.xmlpull.mxp1.MXParser");
-            }
-            catch (Exception e) {
-                throw new IllegalStateException("No XML Pull Parser is available!", e);
-            }
-        }
-        // Create a new parser instance.
         try {
-            Constructor<?> constructor = parserClass.getConstructor();
-            parser = (XmlPullParser) constructor.newInstance();
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
+                    className,
+                    SmackConfiguration.class);
+            parser = factory.newPullParser();
         }
         catch (Exception e) {
-            throw new IllegalArgumentException("Can't initialize the configured debugger!", e);
+            throw new IllegalStateException("Could not create XmlPull parser!", e);
         }
         return parser;
     }
