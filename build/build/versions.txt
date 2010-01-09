@@ -3,7 +3,7 @@ jar         | version
 xmlunit     | 1.2
 junit       | 4.6
 jstun       | 0.7.2
-xpp         | 1.1.4c
+xpp3        | 1.1.4c
 jbosh       | 0.6.0
 xlightweb   | 2.5
 xSocket     | 2.4.6
