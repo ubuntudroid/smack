@@ -610,7 +610,7 @@ public class XMPPConnection extends Connection {
                     listener.connectionCreated(this);
                 }
             }
-            else {
+            else if (!wasAuthenticated) {
                 packetReader.notifyReconnection();
             }
 
@@ -994,6 +994,7 @@ public class XMPPConnection extends Connection {
                     login(config.getUsername(), config.getPassword(),
                             config.getResource());
                 }
+                packetReader.notifyReconnection();
             }
             catch (XMPPException e) {
                 e.printStackTrace();
