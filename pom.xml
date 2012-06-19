@@ -1,0 +1,181 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.igniterealtime</groupId>
+	<artifactId>smack-parent</artifactId>
+	<name>Smack Parent Project</name>
+	<version>3.2.0-SNAPSHOT</version>
+	<description>Smack is an Open Source XMPP (Jabber) client library for instant messaging and presence.</description>
+	<packaging>pom</packaging>
+	<organization>
+		<name>Ignite Realtime</name>
+		<url>http://www.igniterealtime.org</url>
+	</organization>
+	<url>http://www.igniterealtime.org/projects/smack/</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>jira</system>
+		<url>http://www.igniterealtime.org/issues/browse/SMACK</url>
+	</issueManagement>
+	<developers>
+		<developer>
+			<name>Matt Tucker</name>
+			<roles>
+				<role>Original author</role>
+				<role>Project Lead</role>
+			</roles>
+			<email>matt@jivesoftware.com</email>
+			<organization>Jive Software</organization>
+			<organizationUrl>http://www.jivesoftware.com</organizationUrl>
+			<timezone>-8</timezone>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Gaston Dombiak</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<email>gaston@jivesoftware.com</email>
+			<organization>Jive Software</organization>
+			<organizationUrl>http://www.jivesoftware.com</organizationUrl>
+			<timezone>-8</timezone>
+		</contributor>
+	</contributors>
+	<scm>
+		<connection>scm:svn:http://svn.igniterealtime.org/svn/repos/smack</connection>
+		<developerConnection>scm:svn:https://svn.igniterealtime.org/svn/repos/smack</developerConnection>
+		<url>http://www.igniterealtime.org/fisheye/viewrep/svn-org/smack</url>
+	</scm>
+
+	<modules>
+		<module>smack</module>
+		<module>smack-bosh</module>
+		<module>smackx</module>
+		<module>smackx-debug</module>
+		<module>smackx-jingle</module>
+		<module>smack-sample</module>
+		<!--
+		<module>smack-test</module>
+		<module>smackx-test</module>
+		<module>smackx-jingle-test</module>
+		<module>smack-release</module>
+		-->
+	</modules>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>aggregate-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<show>public</show>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>xpp3</groupId>
+				<artifactId>xpp3</artifactId>
+				<version>1.1.4c</version>
+			</dependency>
+			<dependency>
+				<groupId>com.jcraft</groupId>
+				<artifactId>jzlib</artifactId>
+				<version>1.0.7</version>
+			</dependency>
+			<dependency>
+				<groupId>de.javawi.jstun</groupId>
+				<artifactId>jstun</artifactId>
+				<version>0.7.3</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.media</groupId>
+				<artifactId>jmf</artifactId>
+				<version>2.1.1e</version>
+			</dependency>
+			<dependency>
+				<groupId>mil.jfcom.cie.media</groupId>
+				<artifactId>speex</artifactId>
+				<version>1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.jspeex</groupId>
+				<artifactId>jspeex</artifactId>
+				<version>0.9.7</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging-api</artifactId>
+				<version>1.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.6</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>xmlunit</groupId>
+				<artifactId>xmlunit</artifactId>
+				<version>1.0</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<doctitle>Smack ${project.version}</doctitle>
+					<windowtitle>Smack ${project.version}</windowtitle>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>aggregate</id>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+</project>
