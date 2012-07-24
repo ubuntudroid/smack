@@ -727,7 +727,7 @@ public class BOSHConnection extends Connection {
                 else {
                     if (connEvent.isError()) {
                         try {
-                            connEvent.getCause();
+                            throw new Exception(connEvent.getCause());
                         }
                         catch (Exception e) {
                             notifyConnectionError(e);
