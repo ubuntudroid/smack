@@ -336,14 +336,6 @@ public class BOSHConnection extends Connection {
             }
         }
 
-        // Create the roster if it is not a reconnection.
-        if (this.roster == null) {
-            this.roster = new Roster(this);
-        }
-        if (config.isRosterLoadedAtLogin()) {
-            this.roster.reload();
-        }
-
         // Set presence to online.
         if (config.isSendPresence()) {
             sendPacket(new Presence(Presence.Type.available));
@@ -361,6 +353,14 @@ public class BOSHConnection extends Connection {
         // name we are now logged-in as.l
         if (config.isDebuggerEnabled() && debugger != null) {
             debugger.userHasLogged(user);
+        }
+        
+        // Create the roster if it is not a reconnection.
+        if (this.roster == null) {
+            this.roster = new Roster(this);
+        }
+        if (config.isRosterLoadedAtLogin()) {
+            this.roster.reload();
         }
     }
 
